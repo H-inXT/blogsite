@@ -1,0 +1,37 @@
+{% extends 'blog/blog_list.html' %}
+{# {% extends 'base.html' %} #}
+
+
+{# 页面标题 #}
+{% block title%}
+    {{ blog_type.type_name }}
+{% endblock%}
+
+{# 此处可以删除 继承的模板已有 #}
+{% block nav_blog_active %}active{% endblock %}
+
+{% block blog_list_title %}
+    分类：{{ blog_type.type_name }}{# (一共有{{ blogs|length }}篇博客) #}
+    <a href="{% url 'blog_list'%}">查看全部博客</a>
+{% endblock%}
+
+
+{# 以下已经注释 #}
+{% comment %}
+{# 页面内容 #}
+{% block content%}
+    {% for blog in blogs %}
+        <a href="{% url 'blog_detail' blog.pk %}">
+        <h3>{{ blog.title }}</h3>
+        </a>
+        <!-- 可用于中文 -->
+        <p>{{ blog.content|truncatechars:30 }}</p> 
+        <!-- 可用于英文 -->
+        <!-- <p>{{ blog.content|truncatewords:30 }}</p>  -->
+    {% empty %}
+        <p>-- 暂无博客，敬请期待 --</p>
+    {% endfor %}
+    <p>一共有{{ blogs|length }}篇博客</p>
+{% endblock%}
+{% endcomment %}
+
